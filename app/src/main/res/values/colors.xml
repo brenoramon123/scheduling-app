@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cinza_escuro">#222222</color>
+    <color name="cinza_claro">#45C7BF</color>
+    <color name="verde_claro">#E4DF7D</color>
+    <color name="preto_claro">#040404</color>
+    <color name="verde_agua">#ACD387</color>
+    <color name="verde_escuro">#4F754C</color>
+    <color name="verde">#759372</color>
+    <color name="black">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text">#332200</color>
+    <color name="date">#CDCDCD</color>
+    <color name="button">#FFBF00</color>
+    <color name="base">#2D2D2D</color>
+</resources>
