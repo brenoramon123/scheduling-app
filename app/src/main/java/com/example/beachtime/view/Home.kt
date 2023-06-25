@@ -40,16 +40,16 @@ class Home : AppCompatActivity() {
 
     }
     private fun getServicos(){
-        val servico1 = Servicos(R.drawable.quadra_1, "Quadra 1")
+        val servico1 = Servicos(R.drawable.imagem1, "")
         listaServicos.add(servico1)
 
-        val servico2 = Servicos(R.drawable.quadra_2,"Quadra 2")
+        val servico2 = Servicos(R.drawable.imagem2,"")
         listaServicos.add(servico2)
 
-        val servico3 = Servicos(R.drawable.quadra_3, "Quadra 3")
+        val servico3 = Servicos(R.drawable.imagem4, "")
         listaServicos.add(servico3)
 
-        val servico4 = Servicos(R.drawable.quadra_4, "Quadra 4")
+        val servico4 = Servicos(R.drawable.imagen2, "")
         listaServicos.add(servico4)
     }
 }
