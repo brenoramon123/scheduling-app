@@ -1,5 +1,6 @@
 package com.example.beachtime.view
 
+import com.example.beachtime.R
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -69,40 +70,42 @@ class Agendamento : AppCompatActivity() {
             val modalidade3 = binding.modalidade3
             val modalidade4 = binding.modalidade4
 
-            when{
-                hora.isEmpty() ->{
-                    mensagem(it,"Preencha o horário!","#FF0000")
+            when {
+                hora.isEmpty() -> {
+                    mensagem(it, "Preencha o horário!", "#FF0000")
                 }
-                hora < "8:00" && hora > "22:00" -> {
-                    mensagem(it,"Arena 1505 está fechada - horário de atendimento das 08:00 as 22:00 ",  "#FF0000")
+                hora < "8:00" || hora > "22:00" -> {
+                    mensagem(
+                        it,
+                        "Arena 1505 está fechada - horário de atendimento das 08:00 as 22:00 ",
+                        "#FF0000"
+                    )
                 }
-                data.isEmpty() ->{
-                    mensagem(it,"Selecione a data! ",  "#FF0000")
-                }
-                modalidade1.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
-                    salvarAgendamento(it,nome,"Beach Tennis",data,hora)
+                data.isEmpty() -> {
 
+                    mensagem(it, "Selecione a data! ", "#FF0000")
                 }
-                modalidade2.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
-                    salvarAgendamento(it,nome,"Volei",data,hora)
-                }
-                modalidade3.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
-                    salvarAgendamento(it,nome,"FutVolei",data,hora)
-
-                }
-                modalidade4.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
-                    salvarAgendamento(it,nome,"FutMesa",data,hora)
-
+                binding.radioGroup.checkedRadioButtonId == -1 -> {
+                    mensagem(it, "Escolha uma modalidade! ", "#00FF00")
                 }
                 else -> {
-                    mensagem(it,"Escolha uma modalidade! ",  "#00FF00")
+                    val modalidadeSelecionada = when (binding.radioGroup.checkedRadioButtonId) {
+                        R.id.modalidade1 -> "Beach Tennis"
+                        R.id.modalidade2 -> "Volei"
+                        R.id.modalidade3 -> "FutVolei"
+                        R.id.modalidade4 -> "FutMesa"
+                        else -> ""
+                    }
 
+
+                            if (data.isNotEmpty() && hora.isNotEmpty()) {
+                                salvarAgendamento(it, nome, modalidadeSelecionada, data, hora)
+                            }
                 }
             }
-
-
         }
     }
+
     private fun mensagem(view: View, mensagem: String, cor: String){
         val snackbar = Snackbar.make(view,mensagem,Snackbar.LENGTH_SHORT)
         snackbar.setBackgroundTint(Color.parseColor(cor))
@@ -124,6 +127,5 @@ class Agendamento : AppCompatActivity() {
         }.addOnFailureListener{
             mensagem(view,"Erro no servidor","#FF0000")
         }
-
     }
 }

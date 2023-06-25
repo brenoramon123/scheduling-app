@@ -1,187 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/base"
-    tools:context=".view.Agendamento">
 
-    <TextView
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Agendamento"
-        android:textSize="25sp"
-        android:textColor="@color/verde_agua"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_margin="40dp"/>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:cardBackgroundColor="@color/verde_escuro">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/base"
+        tools:context=".view.Agendamento">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data"
-            android:textSize="18sp"
-            android:textColor="@color/white"
+            android:text="Agendamento"
+            android:textSize="25sp"
+            android:textColor="@color/verde_agua"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_margin="10dp"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_margin="40dp"/>
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="@color/verde_escuro">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:cardBackgroundColor="@color/verde_escuro">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="@color/verde_escuro">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hora"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:timePickerMode="spinner"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hora"
+            android:text="Escolha uma modalidade"
             android:textSize="18sp"
-            android:textColor="@color/white"
+            android:textColor="@color/verde_agua"
             android:textStyle="bold"
-            android:gravity="center"
-            android:layout_margin="10dp"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_margin="20dp"/>
 
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:timePickerMode="spinner"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Escolha uma modalidade"
-        android:textSize="18sp"
-        android:textColor="@color/verde_agua"
-        android:textStyle="bold"
-        android:layout_margin="20dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-
-        <CheckBox
-            android:id="@+id/modalidade1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"/>
-
-        <TextView
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Beach Tennis"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:textStyle="normal"/>
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+            <RadioButton
+                android:id="@+id/modalidade1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Beach Tennis"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="normal"/>
 
-        <CheckBox
-            android:id="@+id/modalidade2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"/>
+            <RadioButton
+                android:id="@+id/modalidade2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volei"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="normal"/>
 
-        <TextView
+            <RadioButton
+                android:id="@+id/modalidade3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FutVolei"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="normal"/>
+
+            <RadioButton
+                android:id="@+id/modalidade4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FutMesa"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="normal"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btAgendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Volei"
+            android:text="Agendar"
             android:textSize="18sp"
-            android:textColor="@color/white"
-            android:textStyle="normal"/>
+            android:textColor="@color/text"
+            android:textStyle="normal"
+            android:backgroundTint="@color/button"
+            app:cornerRadius="15dp"
+            android:layout_margin="40dp"/>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-
-        <CheckBox
-            android:id="@+id/modalidade3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FutVolei"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:textStyle="normal"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-
-        <CheckBox
-            android:id="@+id/modalidade4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FutMesa"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
-    </LinearLayout>
-    
-    <Button
-        android:id="@+id/btAgendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Agendar"
-        android:textSize="18sp"
-        android:textColor="@color/text"
-        android:textStyle="normal"
-        android:backgroundTint="@color/button"
-        app:cornerRadius="15dp"
-        android:layout_margin="40dp"/>
-</LinearLayout>
 </ScrollView>
