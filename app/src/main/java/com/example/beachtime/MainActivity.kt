@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 
 
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -60,4 +61,5 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("nome",nome)
         startActivity(intent)
     }
+
 }

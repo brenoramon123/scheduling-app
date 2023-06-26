@@ -19,6 +19,7 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,10 +30,13 @@
         android:gravity="center"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:cornerRadius="15dp"
-        android:src="@drawable/logo"/>
+        android:id="@+id/imageView"
+        android:layout_width="332dp"
+        android:layout_height="290dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo"
+
+        />
 
     <EditText
         android:id="@+id/editNome"
@@ -72,10 +76,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/cinza_escuro"
+        android:background="@color/base"
         android:padding="15dp"
         android:text="LOGIN"
-        android:textColor="@color/verde_agua"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:cornerRadius="15dp" />

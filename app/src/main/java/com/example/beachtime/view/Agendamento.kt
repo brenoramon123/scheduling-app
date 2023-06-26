@@ -59,7 +59,7 @@ class Agendamento : AppCompatActivity() {
                 minuto = minute.toString()
             }
 
-            hora = "$hourOfDay: $minuto" //19:00
+            hora = "$hourOfDay:$minuto" //19:00
         }
 
         binding.timePicker.setIs24HourView(true) //formato de 24 horas
@@ -74,15 +74,21 @@ class Agendamento : AppCompatActivity() {
                 hora.isEmpty() -> {
                     mensagem(it, "Preencha o horário!", "#FF0000")
                 }
-                hora < "8:00" || hora > "22:00" -> {
+                !hora.matches(Regex("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$")) -> {
                     mensagem(
                         it,
-                        "Arena 1505 está fechada - horário de atendimento das 08:00 as 22:00 ",
+                        "Horário inválido! Use o formato HH:mm, onde HH é a hora (00-23) e mm é o minuto (00-59)",
+                        "#FF0000"
+                    )
+                }
+                !isHorarioAtendimentoValido(hora) -> {
+                    mensagem(
+                        it,
+                        "Arena 1505 está fechada - horário de atendimento das 08:00 as 22:00",
                         "#FF0000"
                     )
                 }
                 data.isEmpty() -> {
-
                     mensagem(it, "Selecione a data! ", "#FF0000")
                 }
                 binding.radioGroup.checkedRadioButtonId == -1 -> {
@@ -105,7 +111,11 @@ class Agendamento : AppCompatActivity() {
             }
         }
     }
-
+    private fun isHorarioAtendimentoValido(hora: String): Boolean {
+        val horaInicioAtendimento = "08:00"
+        val horaFimAtendimento = "22:00"
+        return hora >= horaInicioAtendimento && hora <= horaFimAtendimento
+    }
     private fun mensagem(view: View, mensagem: String, cor: String){
         val snackbar = Snackbar.make(view,mensagem,Snackbar.LENGTH_SHORT)
         snackbar.setBackgroundTint(Color.parseColor(cor))

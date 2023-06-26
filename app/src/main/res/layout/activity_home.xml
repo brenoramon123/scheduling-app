@@ -43,7 +43,7 @@
         android:id="@+id/txtTituloServicos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quadras"
+        android:text="SERVIÇOS"
         android:textColor="@color/verde_agua"
         android:textSize="18sp"
         android:textStyle="bold"

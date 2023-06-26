@@ -8,9 +8,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/verde_escuro"
+        app:cardBackgroundColor="@color/verde_agua"
         app:cardCornerRadius="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
@@ -23,7 +23,7 @@
             android:src="@drawable/ic_launcher_background"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
+            android:layout_margin="5dp"
             />
     </androidx.cardview.widget.CardView>
 
