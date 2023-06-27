@@ -23,8 +23,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Beach Time"
-        android:textSize="36sp"
+        android:text="LOGIN"
+        android:textSize="30sp"
         android:textColor="@color/verde_agua"
         android:textStyle="bold"
         android:gravity="center"/>
@@ -32,7 +32,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="332dp"
-        android:layout_height="290dp"
+        android:layout_height="310dp"
         android:scaleType="centerCrop"
         android:src="@drawable/logo"
 

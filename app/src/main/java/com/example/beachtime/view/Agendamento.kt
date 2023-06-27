@@ -1,6 +1,4 @@
 package com.example.beachtime.view
-
-import com.example.beachtime.R
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -32,19 +30,19 @@ class Agendamento : AppCompatActivity() {
         val datePicker = binding.datePicker
         datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
 
-            calendar.set(Calendar.YEAR,year)
-            calendar.set(Calendar.MONTH,monthOfYear)
-            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth)
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, monthOfYear)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             var dia = dayOfMonth.toString()
             val mes: String
 
-            if (dayOfMonth < 10){
+            if (dayOfMonth < 10) {
                 dia = "o $dayOfMonth"
             }
-            if (monthOfYear < 10){
-                mes = ""+(monthOfYear+1)
-            }else{
+            if (monthOfYear < 10) {
+                mes = "" + (monthOfYear + 1)
+            } else {
                 mes = (monthOfYear + 1).toString()
             }
 
@@ -53,13 +51,13 @@ class Agendamento : AppCompatActivity() {
         binding.timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
             val minuto: String
 
-            if(minute < 10){
+            if (minute < 10) {
                 minuto = "0$minute"
-            }else{
+            } else {
                 minuto = minute.toString()
             }
 
-            hora = "$hourOfDay:$minuto" //19:00
+            hora = "$hourOfDay: $minuto" //19:00
         }
 
         binding.timePicker.setIs24HourView(true) //formato de 24 horas
@@ -70,61 +68,78 @@ class Agendamento : AppCompatActivity() {
             val modalidade3 = binding.modalidade3
             val modalidade4 = binding.modalidade4
 
+            val selectedCalendar = Calendar.getInstance().apply {
+                set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+                set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+                set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
+                set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
+                set(Calendar.MINUTE, binding.timePicker.minute)
+            }
+
+            val currentDate = Calendar.getInstance()
+
+            if (selectedCalendar.before(currentDate)) {
+                mensagem(it, "Não é possível agendar datas passadas!", "#FF0000")
+                return@setOnClickListener
+            }
+
+            val selectedTime =
+                String.format("%02d:%02d", binding.timePicker.hour, binding.timePicker.minute)
+
             when {
                 hora.isEmpty() -> {
                     mensagem(it, "Preencha o horário!", "#FF0000")
                 }
-                !hora.matches(Regex("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$")) -> {
+
+                selectedTime < "08:00" || selectedTime > "22:00" -> {
                     mensagem(
                         it,
-                        "Horário inválido! Use o formato HH:mm, onde HH é a hora (00-23) e mm é o minuto (00-59)",
+                        "Arena 1505 está fechada - horário de atendimento das 08:00 às 22:00 ",
                         "#FF0000"
                     )
                 }
-                !isHorarioAtendimentoValido(hora) -> {
-                    mensagem(
-                        it,
-                        "Arena 1505 está fechada - horário de atendimento das 08:00 as 22:00",
-                        "#FF0000"
-                    )
-                }
+
                 data.isEmpty() -> {
                     mensagem(it, "Selecione a data! ", "#FF0000")
                 }
-                binding.radioGroup.checkedRadioButtonId == -1 -> {
-                    mensagem(it, "Escolha uma modalidade! ", "#00FF00")
+
+                modalidade1.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
+                    salvarAgendamento(it, nome, "Beach Tennis", data, hora)
                 }
+
+                modalidade2.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
+                    salvarAgendamento(it, nome, "Volei", data, hora)
+                }
+
+                modalidade3.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
+                    salvarAgendamento(it, nome, "FutVolei", data, hora)
+                }
+
+                modalidade4.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
+                    salvarAgendamento(it, nome, "FutMesa", data, hora)
+                }
+
                 else -> {
-                    val modalidadeSelecionada = when (binding.radioGroup.checkedRadioButtonId) {
-                        R.id.modalidade1 -> "Beach Tennis"
-                        R.id.modalidade2 -> "Volei"
-                        R.id.modalidade3 -> "FutVolei"
-                        R.id.modalidade4 -> "FutMesa"
-                        else -> ""
-                    }
-
-
-                            if (data.isNotEmpty() && hora.isNotEmpty()) {
-                                salvarAgendamento(it, nome, modalidadeSelecionada, data, hora)
-                            }
+                    mensagem(it, "Escolha uma modalidade! ", "#FF0000")
                 }
             }
         }
     }
-    private fun isHorarioAtendimentoValido(hora: String): Boolean {
-        val horaInicioAtendimento = "08:00"
-        val horaFimAtendimento = "22:00"
-        return hora >= horaInicioAtendimento && hora <= horaFimAtendimento
-    }
-    private fun mensagem(view: View, mensagem: String, cor: String){
-        val snackbar = Snackbar.make(view,mensagem,Snackbar.LENGTH_SHORT)
+
+    private fun mensagem(view: View, mensagem: String, cor: String) {
+        val snackbar = Snackbar.make(view, mensagem, Snackbar.LENGTH_SHORT)
         snackbar.setBackgroundTint(Color.parseColor(cor))
         snackbar.setTextColor(Color.parseColor("#FFFFFF"))
         snackbar.show()
     }
 
-    private fun salvarAgendamento(view: View,cliente: String,modalidade: String,data: String,hora:String) {
-
+    private fun salvarAgendamento(
+        view: View,
+        cliente: String,
+        modalidade: String,
+        data: String,
+        hora: String
+    ) {
         val db = FirebaseFirestore.getInstance()
         val dadosUsuario = hashMapOf(
             "cliente" to cliente,
@@ -132,10 +147,14 @@ class Agendamento : AppCompatActivity() {
             "Data" to data,
             "Hora" to hora
         )
-        db.collection("agendamento").document(cliente).set(dadosUsuario).addOnCompleteListener {
-            mensagem(view,"Agendamento realizado com sucesso!","#FF03DAC5")
-        }.addOnFailureListener{
-            mensagem(view,"Erro no servidor","#FF0000")
-        }
+        db.collection("agendamento").document(cliente)
+            .set(dadosUsuario)
+            .addOnCompleteListener {
+                mensagem(view, "Agendamento realizado com sucesso!", "#FF03DAC5")
+            }
+            .addOnFailureListener {
+                mensagem(view, "Erro no servidor", "#FF0000")
+            }
     }
 }
+
