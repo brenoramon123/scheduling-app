@@ -1,11 +1,12 @@
 package com.example.beachtime.view
+
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
 import androidx.annotation.RequiresApi
-
 import com.example.beachtime.databinding.ActivityAgendamentoBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,15 +39,15 @@ class Agendamento : AppCompatActivity() {
             val mes: String
 
             if (dayOfMonth < 10) {
-                dia = "o $dayOfMonth"
+                dia = "0$dayOfMonth"
             }
-            if (monthOfYear < 10) {
-                mes = "" + (monthOfYear + 1)
+            if (monthOfYear < 9) {
+                mes = "0" + (monthOfYear + 1)
             } else {
                 mes = (monthOfYear + 1).toString()
             }
 
-            data = "$dia / $mes / $year"
+            data = "$dia/$mes/$year"
         }
         binding.timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
             val minuto: String
@@ -57,7 +58,7 @@ class Agendamento : AppCompatActivity() {
                 minuto = minute.toString()
             }
 
-            hora = "$hourOfDay: $minuto" //19:00
+            hora = "$hourOfDay:$minuto" //19:00
         }
 
         binding.timePicker.setIs24HourView(true) //formato de 24 horas
@@ -107,7 +108,8 @@ class Agendamento : AppCompatActivity() {
                     salvarAgendamento(it, nome, "Beach Tennis", data, hora)
                 }
 
-                modalidade2.isChecked && data.isNotEmpty() && hora.isNotEmpty() -> {
+                modalidade2.isChecked && data.isNotEmpty() && hora.isNotEmpty()
+                -> {
                     salvarAgendamento(it, nome, "Volei", data, hora)
                 }
 
@@ -120,7 +122,7 @@ class Agendamento : AppCompatActivity() {
                 }
 
                 else -> {
-                    mensagem(it, "Escolha uma modalidade! ", "#FF0000")
+                    mensagem(it, "Escolha uma modalidade!", "#FF0000")
                 }
             }
         }
@@ -140,21 +142,41 @@ class Agendamento : AppCompatActivity() {
         data: String,
         hora: String
     ) {
-        val db = FirebaseFirestore.getInstance()
-        val dadosUsuario = hashMapOf(
-            "cliente" to cliente,
-            "Modalidade" to modalidade,
-            "Data" to data,
-            "Hora" to hora
-        )
-        db.collection("agendamento").document(cliente)
-            .set(dadosUsuario)
-            .addOnCompleteListener {
-                mensagem(view, "Agendamento realizado com sucesso!", "#FF03DAC5")
-            }
-            .addOnFailureListener {
-                mensagem(view, "Erro no servidor", "#FF0000")
-            }
+        val formaPagamento = getFormaPagamentoSelecionada()
+        if (formaPagamento.isEmpty()) {
+            mensagem(view, "Selecione uma forma de pagamento!", "#FF0000")
+        } else {
+            val db = FirebaseFirestore.getInstance()
+            val dadosUsuario = hashMapOf(
+                "cliente" to cliente,
+                "modalidade" to modalidade,
+                "data" to data,
+                "hora" to hora,
+                "formaPagamento" to formaPagamento
+            )
+            db.collection("agendamento").document(cliente)
+                .set(dadosUsuario)
+                .addOnCompleteListener {
+                    mensagem(view, "Agendamento realizado com sucesso!", "#FF03DAC5")
+                }
+                .addOnFailureListener {
+                    mensagem(view, "Erro no servidor", "#FF0000")
+                }
+        }
+    }
+
+    private fun getFormaPagamentoSelecionada(): String {
+        val radioGroup = binding.paymentRadioGroup
+        val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+        if (selectedRadioButtonId == -1) {
+            // Nenhuma forma de pagamento selecionada
+            mensagem(binding.btAgendar, "Selecione uma forma de pagamento!", "#FF0000")
+            return ""
+        } else {
+            val selectedRadioButton = radioGroup.findViewById<RadioButton>(selectedRadioButtonId)
+            return selectedRadioButton?.text.toString()
+        }
     }
 }
+
 

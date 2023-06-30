@@ -15,7 +15,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         >
-        
+
         <ImageView
             android:id="@+id/imgServico"
             android:layout_width="match_parent"
@@ -39,5 +39,5 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-/>
+        />
 </LinearLayout>
